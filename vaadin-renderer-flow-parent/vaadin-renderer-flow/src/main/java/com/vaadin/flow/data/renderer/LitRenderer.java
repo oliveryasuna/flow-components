@@ -41,6 +41,7 @@ import com.vaadin.flow.internal.nodefeature.ReturnChannelRegistration;
 import com.vaadin.flow.shared.Registration;
 
 import elemental.json.JsonArray;
+import elemental.json.JsonObject;
 
 /**
  * LitRenderer is a {@link Renderer} that uses a Lit-based template literal to
@@ -295,6 +296,20 @@ public class LitRenderer<SOURCE> extends Renderer<SOURCE> {
         Objects.requireNonNull(property);
         Objects.requireNonNull(provider);
         valueProviders.put(property, provider);
+        return this;
+    }
+
+    /**
+     * Similar to {@link #withProperty(String, ValueProvider)} but allows
+     * providing multiple properties at once.
+     *
+     * @param properties
+     *           the properties to add, not <code>null</code>.
+     * @return this instance for method chaining
+     */
+    public LitRenderer<SOURCE> withProperties(Map<String, ValueProvider<SOURCE, ?>> properties) {
+        Objects.requireNonNull(properties);
+        properties.forEach(this::withProperty);
         return this;
     }
 

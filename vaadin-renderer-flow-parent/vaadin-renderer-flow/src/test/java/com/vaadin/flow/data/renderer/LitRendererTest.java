@@ -21,6 +21,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+
 public class LitRendererTest {
 
     @Before
@@ -64,6 +66,18 @@ public class LitRendererTest {
     public void supportGettingValueProviders() {
         LitRenderer<?> renderer = LitRenderer.of("<div></div>")
                 .withProperty("foo", item -> 1).withProperty("bar", item -> 2);
+
+        Assert.assertTrue(
+                renderer.getValueProviders().keySet().contains("foo"));
+        Assert.assertTrue(
+                renderer.getValueProviders().keySet().contains("bar"));
+        Assert.assertTrue(renderer.getValueProviders().size() == 2);
+    }
+
+    @Test
+    public void supportGettingValueProvidersWithProperties() {
+        LitRenderer<?> renderer = LitRenderer.of("<div></div>")
+                .withProperties(Map.of("foo", item -> 1, "bar", item -> 2));
 
         Assert.assertTrue(
                 renderer.getValueProviders().keySet().contains("foo"));
